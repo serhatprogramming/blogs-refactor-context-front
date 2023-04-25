@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 //components
-import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
+import Blogs from "./components/Blogs";
 //services
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -26,17 +26,17 @@ const App = () => {
     );
     if (userLocalStorage) {
       setUser(userLocalStorage);
+
       const returnedToken = loginService.setToken(userLocalStorage.token);
       setToken(returnedToken);
-      blogService.getAll(returnedToken).then((blogs) => setBlogs(blogs));
     }
   }, []);
-  //======================================================//
+
   const showLogin = () => (
     <>
       <h3>login to application</h3>
       <Notification notification={notification} />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <div>
           username
           <input
@@ -64,26 +64,20 @@ const App = () => {
   );
   //======================================================//
 
-  const showBlogs = () => (
-    <div>
-      <h2>blogs</h2>
-      <Notification notification={notification} />
-      <p>
-        {`${user.username} is logged in`}{" "}
-        <button onClick={handleLogout}>logout</button>{" "}
-      </p>
-      {createNewBlog()}
-      {blogs
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            token={token}
-            username={user.username}
-          />
-        ))}
-    </div>
+  const showBlogs = ({
+    notification,
+    user,
+    handleLogout,
+    createNewBlog,
+    token,
+  }) => (
+    <Blogs
+      notification={notification}
+      user={user}
+      handleLogout={handleLogout}
+      createNewBlog={createNewBlog}
+      token={token}
+    />
   );
   //======================================================//
 
@@ -121,7 +115,7 @@ const App = () => {
   );
   //======================================================//
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const loggedUser = await loginService.login(username, password);
@@ -158,7 +152,13 @@ const App = () => {
   };
   //======================================================//
 
-  return <>{user ? showBlogs() : showLogin()}</>;
+  return (
+    <>
+      {user
+        ? showBlogs({ notification, user, handleLogout, createNewBlog, token })
+        : showLogin()}
+    </>
+  );
 };
 
 export default App;
