@@ -32,17 +32,13 @@ const Blogs = ({ notification, user, handleLogout, token }) => {
   }
 
   const blogs = blogsWQuery.data;
-
+  //======================================================//
   const createNewBlog = () => (
     <Togglable buttonLabel="new note" ref={blogFormRef}>
       <BlogForm handleCreateBlog={handleCreateBlog} />
     </Togglable>
   );
   //======================================================//
-
-  //======================================================//
-  //======================================================//
-
   const handleCreateBlog = async ({ title, author, url }) => {
     blogFormRef.current.toggleVisible();
     const newBlog = {
