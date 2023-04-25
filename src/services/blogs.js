@@ -12,7 +12,7 @@ const getAll = async (token) => {
   return response.data;
 };
 
-const createNew = async (blog, token) => {
+const createNew = async ({ blog, token }) => {
   const config = {
     headers: {
       Authorization: token,
@@ -22,7 +22,7 @@ const createNew = async (blog, token) => {
   try {
     return await axios.post(baseUrl, blog, config);
   } catch (error) {
-    return error.message;
+    throw new Error(error.message);
   }
 };
 
