@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
 import Blogs from "./components/Blogs";
+import Login from "./components/Login";
 //services
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -14,7 +15,6 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(null);
-
   const [notification, setNotification] = useState(null);
 
   const blogFormRef = useRef();
@@ -26,41 +26,27 @@ const App = () => {
     );
     if (userLocalStorage) {
       setUser(userLocalStorage);
-
       const returnedToken = loginService.setToken(userLocalStorage.token);
       setToken(returnedToken);
     }
   }, []);
 
-  const showLogin = () => (
-    <>
-      <h3>login to application</h3>
-      <Notification notification={notification} />
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            name="Username"
-            value={username}
-            id="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            name="Password"
-            value={password}
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <button id="login-button">login</button>
-      </form>
-    </>
+  const showLogin = ({
+    notification,
+    handleLogin,
+    username,
+    password,
+    setPassword,
+    setUsername,
+  }) => (
+    <Login
+      notification={notification}
+      handleLogin={handleLogin}
+      username={username}
+      setUsername={setUsername}
+      setPassword={setPassword}
+      password={password}
+    />
   );
   //======================================================//
 
@@ -156,7 +142,14 @@ const App = () => {
     <>
       {user
         ? showBlogs({ notification, user, handleLogout, createNewBlog, token })
-        : showLogin()}
+        : showLogin({
+            notification,
+            handleLogin,
+            username,
+            password,
+            setPassword,
+            setUsername,
+          })}
     </>
   );
 };
