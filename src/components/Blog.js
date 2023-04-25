@@ -30,7 +30,9 @@ const Blog = ({ blog, token, username }) => {
   };
 
   const removeBlog = () => {
-    window.confirm(`Remove blog ${blog.title} by ${blog.author}`);
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      blogService.deleteBlog({ blog, token });
+    }
   };
 
   return (
