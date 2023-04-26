@@ -16,11 +16,15 @@ const User = () => {
     <>
       <h2>{user.username}</h2>
       <h3>added blogs</h3>
-      <ul>
-        {user.blogs.map((blog) => (
-          <li key={blog.id}>{blog.title}</li>
-        ))}
-      </ul>
+      {user.blogs.length > 0 ? (
+        <ul>
+          {user.blogs.map((blog) => (
+            <li key={blog.id}>{blog.title}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No blogs created yet.</p>
+      )}
     </>
   );
 };
