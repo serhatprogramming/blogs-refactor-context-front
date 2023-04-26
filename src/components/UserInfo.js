@@ -13,7 +13,7 @@ const UserInfo = () => {
     window.localStorage.clear();
     credentialsDispatch({ type: "LOGOUT" });
   };
-  //======================================================//
+
   return (
     <div>
       {credentials ? (
