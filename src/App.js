@@ -28,12 +28,18 @@ const App = () => {
   const padding = { padding: 5 };
   return (
     <>
-      <Link to="/users" style={padding}>
-        users
-      </Link>
-      <Link to="/login" style={padding}>
-        login
-      </Link>
+      <div>
+        <Link to="/" style={padding}>
+          home
+        </Link>
+        <Link to="/users" style={padding}>
+          users
+        </Link>
+        <Link to="/login" style={padding}>
+          login
+        </Link>
+      </div>
+
       <Routes>
         <Route path="/" element={credentials ? <Blogs /> : <Login />} />
         <Route path="/users" element={<Users />} />
