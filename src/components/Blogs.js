@@ -14,11 +14,18 @@ import Togglable from "./Togglable";
 import BlogForm from "./BlogForm";
 // services
 import blogService from "../services/blogs";
+// context
+import { useContext } from "react";
+import NotificationContext from "../NotificationContext";
 
-const Blogs = ({ notification, user, handleLogout, token }) => {
+const Blogs = ({ user, handleLogout, token }) => {
   //======================================================//
   const queryClient = useQueryClient();
 
+  //======================================================//
+  // context for notification
+  //======================================================//
+  const [notification, notificationDispatch] = useContext(NotificationContext);
   //======================================================//
   // query mutation
   const newBlogMutation = useMutation(blogService.createNew);
@@ -32,6 +39,7 @@ const Blogs = ({ notification, user, handleLogout, token }) => {
   }
 
   const blogs = blogsWQuery.data;
+
   //======================================================//
   const createNewBlog = () => (
     <Togglable buttonLabel="new note" ref={blogFormRef}>
@@ -51,29 +59,26 @@ const Blogs = ({ notification, user, handleLogout, token }) => {
       { blog: newBlog, token },
       {
         onSuccess: ({ data }) => {
-          console.log("data at mutate:...", data);
           queryClient.invalidateQueries("blgs");
+          notificationDispatch({
+            type: "INFO",
+            payload: `a new blog ${newBlog.title}! by ${newBlog.author} added`,
+          });
+          setTimeout(() => {
+            notificationDispatch({ type: "CLEAR" });
+          }, 5000);
         },
         onError: (err) => {
-          console.log("hataliysam soyle...", err);
+          notificationDispatch({
+            type: "WARNING",
+            payload: `Fill out all the fields.`,
+          });
+          setTimeout(() => {
+            notificationDispatch({ type: "CLEAR" });
+          }, 5000);
         },
       }
     );
-
-    // if (response === "Request failed with status code 400") {
-    //   message = {
-    //     content: `Fill out all the fields.`,
-    //     style: "error",
-    //   };
-    // } else {
-    //   message = {
-    //     content: `a new blog ${newBlog.title}! by ${newBlog.author} added`,
-    //     style: "info",
-    //   };
-    //   const returnedBlogs = await blogService.getAll(token);
-    //   setBlogs(returnedBlogs);
-    // }
-    // showNotification(message);
   };
 
   //======================================================//
