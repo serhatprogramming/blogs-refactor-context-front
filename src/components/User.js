@@ -14,10 +14,11 @@ const User = () => {
 
   return (
     <>
-      <div>{true ? `Merhaba ${id} ${user.username}` : `nope`}</div>
+      <h2>{user.username}</h2>
+      <h3>added blogs</h3>
       <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.id}</li>
+        {user.blogs.map((blog) => (
+          <li key={blog.id}>{blog.title}</li>
         ))}
       </ul>
     </>
