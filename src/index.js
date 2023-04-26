@@ -6,6 +6,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 // context providers
 import { NotificationContextProvider } from "./NotificationContext";
 import { CredentialsContextProvider } from "./CredentialsContext";
+import { UsersContextProvider } from "./UsersContext";
 // react-query
 const queryClient = new QueryClient();
 // router
@@ -15,9 +16,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <NotificationContextProvider>
       <CredentialsContextProvider>
-        <Router>
-          <App />
-        </Router>
+        <UsersContextProvider>
+          <Router>
+            <App />
+          </Router>
+        </UsersContextProvider>
       </CredentialsContextProvider>
     </NotificationContextProvider>
   </QueryClientProvider>

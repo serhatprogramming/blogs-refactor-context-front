@@ -29,8 +29,9 @@ const Blogs = () => {
   //======================================================//
   const blogFormRef = useRef();
   //======================================================//
-  const blogsWQuery = useQuery("blgs", () =>
-    blogService.getAll(credentials.token)
+  const blogsWQuery = useQuery(
+    "blgs",
+    async () => await blogService.getAll(credentials.token)
   );
   if (blogsWQuery.isLoading) {
     return <div>Loading...</div>;

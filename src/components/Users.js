@@ -4,26 +4,28 @@ import UserInfo from "./UserInfo";
 // services
 import userService from "../services/users";
 // context
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
+import UsersContext from "../UsersContext";
 import CredentialsContext from "../CredentialsContext";
+// react-query
+import { useQuery } from "react-query";
+// routing
+import { Link } from "react-router-dom";
 
 const Users = () => {
   //======================================================//
-  const [users, setUsers] = useState(null);
-  //======================================================//
   // contexts for credentials
-  //======================================================//
   const [credentials, credentialsDispatch] = useContext(CredentialsContext);
+  const [users, usersDispatch] = useContext(UsersContext);
   //======================================================//
-  useEffect(() => {
-    if (credentials !== null) {
-      const callThem = async () => {
-        const acquiredUsers = await userService.getAll(credentials.token);
-        setUsers(acquiredUsers);
-      };
-      callThem();
-    }
-  }, [users]);
+  const userQuery = useQuery(
+    "users",
+    async () => await userService.getAll(credentials.token)
+  );
+  if (userQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+  usersDispatch({ type: "GETUSERS", payload: userQuery.data });
 
   return (
     <div>
@@ -42,7 +44,9 @@ const Users = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.username}</td>
+                    <td>
+                      <Link to={`/users/${user.id}`}>{user.username}</Link>
+                    </td>
                     <td>{user.blogs.length}</td>
                   </tr>
                 ))}
