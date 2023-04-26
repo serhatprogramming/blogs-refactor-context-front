@@ -32,9 +32,22 @@ const Users = () => {
         {users && (
           <div>
             <h3>Users</h3>
-            {users.map((user) => (
-              <li key={user.id}>{user.username}</li>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>blogs created</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.username}</td>
+                    <td>{user.blogs.length}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
