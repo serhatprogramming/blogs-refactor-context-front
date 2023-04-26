@@ -29,7 +29,6 @@ const Users = () => {
 
   return (
     <div>
-      <UserInfo />
       <div>
         {users && (
           <div>

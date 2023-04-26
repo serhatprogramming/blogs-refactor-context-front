@@ -7,7 +7,6 @@ import Notification from "./Notification";
 import Blog from "./Blog";
 import Togglable from "./Togglable";
 import BlogForm from "./BlogForm";
-import UserInfo from "./UserInfo";
 // services
 import blogService from "../services/blogs";
 // context
@@ -91,7 +90,6 @@ const Blogs = () => {
     <div>
       <h2>blogs</h2>
       <Notification notification={notification} />
-      <UserInfo />
       {createNewBlog()}
       {blogs
         .sort((a, b) => b.likes - a.likes)

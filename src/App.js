@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Users from "./components/Users";
 import User from "./components/User";
 import BlogDetail from "./components/BlogDetail";
+import Menu from "./components/Menu";
 // context
 import { useContext } from "react";
 import CredentialsContext from "./CredentialsContext";
@@ -27,27 +28,9 @@ const App = () => {
     }
   }, []);
   //======================================================//
-  const padding = { padding: 5 };
   return (
     <>
-      <div>
-        <Link to="/" style={padding}>
-          home
-        </Link>
-        <Link to="/users" style={padding}>
-          users
-        </Link>
-        {credentials ? (
-          <em>
-            Hello <em>{credentials.user.username}</em>{" "}
-          </em>
-        ) : (
-          <Link to="/login" style={padding}>
-            login
-          </Link>
-        )}
-      </div>
-
+      <Menu />
       <Routes>
         <Route path="/" element={credentials ? <Blogs /> : <Login />} />
         <Route

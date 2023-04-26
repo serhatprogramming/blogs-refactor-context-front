@@ -15,16 +15,12 @@ const UserInfo = () => {
   };
 
   return (
-    <div>
-      {credentials ? (
-        <p>
-          {`${credentials.user.username} is logged in`}{" "}
-          <button onClick={handleLogout}>logout</button>{" "}
-        </p>
-      ) : (
-        <p>Log in to see the other users.</p>
-      )}
-    </div>
+    <>
+      <em>
+        {`${credentials.user.username} is logged in`}{" "}
+        <button onClick={handleLogout}>logout</button>{" "}
+      </em>
+    </>
   );
 };
 
