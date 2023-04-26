@@ -2,9 +2,12 @@ import { useEffect } from "react";
 //components
 import Blogs from "./components/Blogs";
 import Login from "./components/Login";
+import Users from "./components/Users";
 // context
 import { useContext } from "react";
 import CredentialsContext from "./CredentialsContext";
+// routes and Links
+import { Routes, Route, Link } from "react-router-dom";
 
 const App = () => {
   //======================================================//
@@ -21,8 +24,23 @@ const App = () => {
       credentialsDispatch({ type: "LOGIN", payload: userLocalStorage });
     }
   }, []);
-
-  return <>{credentials ? <Blogs /> : <Login />}</>;
+  //======================================================//
+  const padding = { padding: 5 };
+  return (
+    <>
+      <Link to="/users" style={padding}>
+        users
+      </Link>
+      <Link to="/login" style={padding}>
+        login
+      </Link>
+      <Routes>
+        <Route path="/" element={credentials ? <Blogs /> : <Login />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </>
+  );
 };
 
 export default App;

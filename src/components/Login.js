@@ -7,10 +7,15 @@ import loginService from "../services/login";
 import { useContext } from "react";
 import NotificationContext from "../NotificationContext";
 import CredentialsContext from "../CredentialsContext";
-//======================================================//
+// router, navigate to
+import { useNavigate } from "react-router";
+// COMPONENT==============================================//
 const Login = () => {
+  // states for form elements
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  //======================================================//
+  const navigate = useNavigate();
   //======================================================//
   // contexts for notification and credentials
   //======================================================//
@@ -30,6 +35,7 @@ const Login = () => {
       const loggedUser = await loginService.login(username, password);
       credentialsDispatch({ type: "LOGIN", payload: loggedUser });
       window.localStorage.setItem("loggedBlogUser", JSON.stringify(loggedUser));
+      navigate("/");
     } catch (error) {
       postNotification({
         type: "WARNING",
