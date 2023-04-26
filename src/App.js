@@ -4,6 +4,7 @@ import Blogs from "./components/Blogs";
 import Login from "./components/Login";
 import Users from "./components/Users";
 import User from "./components/User";
+import BlogDetail from "./components/BlogDetail";
 // context
 import { useContext } from "react";
 import CredentialsContext from "./CredentialsContext";
@@ -37,9 +38,9 @@ const App = () => {
           users
         </Link>
         {credentials ? (
-          <p>
+          <em>
             Hello <em>{credentials.user.username}</em>{" "}
-          </p>
+          </em>
         ) : (
           <Link to="/login" style={padding}>
             login
@@ -55,6 +56,7 @@ const App = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/users/:id" element={<User />} />
+        <Route path="/blogs/:id" element={<BlogDetail />} />
       </Routes>
     </>
   );

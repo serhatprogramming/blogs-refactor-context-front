@@ -14,6 +14,7 @@ import blogService from "../services/blogs";
 import { useContext } from "react";
 import NotificationContext from "../NotificationContext";
 import CredentialsContext from "../CredentialsContext";
+import BlogsContext from "../BlogsContext";
 
 const Blogs = () => {
   //======================================================//
@@ -23,6 +24,7 @@ const Blogs = () => {
   //======================================================//
   const [notification, notificationDispatch] = useContext(NotificationContext);
   const [credentials, credentialsDispatch] = useContext(CredentialsContext);
+  const [blogsWC, blogsDispatch] = useContext(BlogsContext);
   //======================================================//
   // query mutation
   const newBlogMutation = useMutation(blogService.createNew);
@@ -37,6 +39,7 @@ const Blogs = () => {
     return <div>Loading...</div>;
   }
   const blogs = blogsWQuery.data;
+  blogsDispatch({ type: "GETBLOGS", payload: blogs });
   //======================================================//
   const postNotification = ({ type, payload }) => {
     notificationDispatch({ type, payload });
